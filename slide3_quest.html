@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Questions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Calibri', sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .presentation-slide {
+            width: 100%;
+            max-width: 1200px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px;
+            position: relative;
+        }
+        
+        .slide-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .main-title {
+            font-size: 3.5em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ecf0f1;
+            opacity: 0;
+            animation: fadeInDown 1s ease-out 0.3s forwards;
+        }
+        
+        .subtitle {
+            font-size: 1.6em;
+            opacity: 0.9;
+            max-width: 800px;
+            line-height: 1.4;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.8s forwards;
+            color: #bdc3c7;
+        }
+        
+        .questions-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 1000px;
+            width: 100%;
+            margin: 50px 0;
+        }
+        
+        .research-question {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            opacity: 0;
+            overflow: hidden;
+        }
+        
+        .research-question::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-color);
+        }
+        
+        .research-question:hover {
+            transform: translateX(10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .rq1 {
+            --accent-color: #f39c12;
+            animation: slideInLeft 1s ease-out 1.2s forwards;
+        }
+        
+        .rq2 {
+            --accent-color: #f39c12;
+            animation: slideInLeft 1s ease-out 1.6s forwards;
+        }
+        
+        .rq3 {
+            --accent-color: #f39c12;
+            animation: slideInLeft 1s ease-out 2s forwards;
+        }
+        
+        .question-number {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+        
+        .question-text {
+            font-size: 1.6em;
+            font-weight: 500;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            color: #ecf0f1;
+        }
+        
+        .question-details {
+            font-size: 1.3em;
+            line-height: 1.5;
+            opacity: 0.85;
+            color: #bdc3c7;
+        }
+        
+        .methodology-preview {
+            background: rgba(243, 156, 18, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 50px;
+            border: 2px solid rgba(243, 156, 18, 0.3);
+            text-align: center;
+            max-width: 800px;
+            opacity: 0;
+            animation: fadeInScale 1s ease-out 2.5s forwards;
+        }
+        
+        .methodology-title {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #f39c12;
+            margin-bottom: 20px;
+        }
+        
+        .methodology-description {
+            font-size: 1.2em;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+        
+        .approach-highlight {
+            color: #f39c12;
+            font-weight: 600;
+        }
+        
+        .slide-navigation {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            font-size: 0.9em;
+            opacity: 0.6;
+        }
+        
+        .nav-buttons {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .nav-btn.disabled:hover {
+            transform: none;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Home button styling */
+        .home-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(243, 156, 18, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+        }
+        
+        .home-btn:hover {
+            background: rgba(243, 156, 18, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .home-btn::before {
+            content: '🏠 ';
+            margin-right: 5px;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .presentation-slide {
+                padding: 30px;
+            }
+            
+            .main-title {
+                font-size: 2.5em;
+            }
+            
+            .subtitle {
+                font-size: 1.3em;
+            }
+            
+            .research-question {
+                padding: 30px;
+            }
+            
+            .question-text {
+                font-size: 1.2em;
+            }
+            
+            .research-question:hover {
+                transform: translateX(5px);
+            }
+        }
+        
+        .literature-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            max-width: 1000px;
+            width: 100%;
+            margin: 40px 0;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.2s forwards;
+        }
+        
+        .literature-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .lit-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #f39c12;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .lit-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .lit-point {
+            font-size: 1.1em;
+            line-height: 1.4;
+            opacity: 0.9;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .lit-point:last-child {
+            border-bottom: none;
+        }
+        
+        .research-gap {
+            background: rgba(243, 156, 18, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid rgba(243, 156, 18, 0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .gap-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #f39c12;
+            margin-bottom: 15px;
+        }
+        
+        .gap-content {
+            font-size: 1.1em;
+            line-height: 1.5;
+            opacity: 0.95;
+        }
+        
+        .highlight {
+            color: #f39c12;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <a href="presentation_index.html" class="home-btn">Home</a>
+    <div class="presentation-slide">
+        <div class="slide-header">
+            <h1 class="main-title">Literature Review & Research Questions</h1>
+            <p class="subtitle">
+                State of the art dan gap penelitian yang mengarahkan pengembangan AI pipeline
+            </p>
+        </div>
+        
+        <div class="literature-section">
+            <div class="literature-card">
+                <div class="lit-title">Current State of Art</div>
+                <div class="lit-content">
+                    <div class="lit-point">
+                        <strong>Traditional TDD:</strong> Fokus pada test-first development untuk new systems
+                    </div>
+                    <div class="lit-point">
+                        <strong>AI Testing Tools:</strong> Limited pada unit testing, belum comprehensive untuk async systems
+                    </div>
+                    <div class="lit-point">
+                        <strong>Async Testing:</strong> Manual approach dengan coverage rendah dan effort tinggi
+                    </div>
+                </div>
+            </div>
+            
+            <div class="research-gap">
+                <div class="gap-title">Research Gap</div>
+                <div class="gap-content">
+                    Tidak ada framework yang mengintegrasikan <span class="highlight">AI-powered test generation</span> 
+                    dengan <span class="highlight">retroactive TDD methodology</span> untuk sistem asinkron existing
+                </div>
+            </div>
+        </div>
+        
+        <div class="questions-container">
+            <div class="research-question rq1">
+                <div class="question-number">RQ1</div>
+                <div class="question-text">
+                    Bagaimana mengimplementasikan AI-Enhanced Retroactive TDD?
+                </div>
+                <div class="question-details">
+                    Maksudnya: kita punya AI yang bisa 'baca' kode lama, paham strukturnya, terus otomatis buatin test comprehensive. Seperti punya quality inspector super pintar yang bisa cek semua aspek produk.
+                </div>
+            </div>
+            
+            <div class="research-question rq2">
+                <div class="question-number">RQ2</div>
+                <div class="question-text">
+                    Bagaimana merancang arsitektur pipeline 4-layer dengan MSPP?
+                </div>
+                <div class="question-details">
+                    Artinya: kita buat sistem terstruktur seperti assembly line pabrik - ada tahap analisis, tahap generate, tahap test, tahap evaluasi. Plus cara komunikasi khusus dengan AI namanya MSPP.
+                </div>
+            </div>
+            
+            <div class="research-question rq3">
+                <div class="question-number">RQ3</div>
+                <div class="question-text">
+                    Bagaimana mengintegrasikan dengan CI/CD dan monitoring real-time?
+                </div>
+                <div class="question-details">
+                    Ini berarti: semua proses otomatis dan terintegrasi dengan workflow development yang sudah ada, dengan monitoring 24/7 seperti control room pabrik modern.
+                </div>
+            </div>
+        </div>
+        
+        <div class="methodology-preview">
+            <div class="methodology-title">Metodologi Penelitian</div>
+            <div class="methodology-description">
+                Menggunakan <span class="approach-highlight">experimental approach</span> 
+                dengan studi kasus radio-browser API untuk mengukur efektivitas AI pipeline 
+                melalui <span class="approach-highlight">comprehensive metrics evaluation</span>
+            </div>
+        </div>
+        
+        <div class="slide-navigation">
+            Slide 4 of 9
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="slide2_conflict.html" class="nav-btn">Previous</a>
+            <a href="slide4_methodology.html" class="nav-btn">Next</a>
+        </div>
+    </div>
+</body>
+</html> 

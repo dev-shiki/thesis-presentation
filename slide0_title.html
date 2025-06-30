@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title Slide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Calibri', sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        /* Animated Background Particles */
+        .particles {
+            display: none;
+        }
+        
+        .presentation-slide {
+            width: 100%;
+            max-width: 1200px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .title-container {
+            text-align: center;
+            max-width: 1000px;
+            width: 100%;
+        }
+        
+        .main-title {
+            font-size: 3.8em;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #ecf0f1;
+            opacity: 0;
+            animation: fadeInDown 1.5s ease-out 0.5s forwards;
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            font-size: 1.8em;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-out 1s forwards;
+            font-weight: 300;
+            color: #bdc3c7;
+        }
+        
+        .author-info {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            margin: 30px 0;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-out 1.5s forwards;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .author-name {
+            font-size: 2.2em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #f39c12;
+        }
+        
+        .student-id {
+            font-size: 1.4em;
+            opacity: 0.8;
+            margin-bottom: 20px;
+            color: #95a5a6;
+            font-weight: 500;
+        }
+        
+        .program-info {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            color: #ecf0f1;
+        }
+        
+        .university-info {
+            font-size: 1.1em;
+            opacity: 0.8;
+            margin-bottom: 10px;
+            color: #bdc3c7;
+        }
+        
+        .date-info {
+            background: rgba(243, 156, 18, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 40px;
+            border: 2px solid rgba(243, 156, 18, 0.3);
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-out 2s forwards;
+            box-shadow: 0 15px 30px rgba(243, 156, 18, 0.2);
+        }
+        
+        .date-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #f39c12;
+            margin-bottom: 10px;
+        }
+        
+        .date-text {
+            font-size: 1.1em;
+            opacity: 0.9;
+            color: #ecf0f1;
+        }
+        
+        .slide-navigation {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            font-size: 0.9em;
+            opacity: 0.6;
+            z-index: 2;
+        }
+        
+        .nav-buttons {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 2;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .nav-btn.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .nav-btn.disabled:hover {
+            transform: none;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Home button styling */
+        .home-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(243, 156, 18, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+        }
+        
+        .home-btn:hover {
+            background: rgba(243, 156, 18, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .home-btn::before {
+            content: '🏠 ';
+            margin-right: 5px;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .presentation-slide {
+                padding: 30px;
+            }
+            
+            .main-title {
+                font-size: 2.8em;
+            }
+            
+            .subtitle {
+                font-size: 1.4em;
+            }
+            
+            .author-name {
+                font-size: 1.8em;
+            }
+            
+            .author-info {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="presentation_index.html" class="home-btn">Home</a>
+    <div class="presentation-slide">
+        <div class="title-container">
+            <h1 class="main-title">Pipeline Generative AI untuk Otomatisasi Generasi Test Sistem Asinkron</h1>
+            <p class="subtitle">Implementasi AI-Powered Testing Framework dengan Claude 3.7 Sonnet</p>
+            
+            <div class="author-info">
+                <div class="author-name">Nanda Leo Ardana</div>
+                <div class="student-id">11210910000083</div>
+                <div class="program-info">Program Studi Teknik Informatika</div>
+                <div class="university-info">Fakultas Sains dan Teknologi</div>
+                <div class="university-info">UIN Syarif Hidayatullah Jakarta</div>
+                <div class="date-text">2024</div>
+            </div>
+            
+           
+        </div>
+        
+        <div class="slide-navigation">
+            Slide 1 of 9
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="#" class="nav-btn disabled">Previous</a>
+            <a href="slide1_hook.html" class="nav-btn">Next</a>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thesis Defense Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Calibri', sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 40px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .main-title {
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ecf0f1;
+        }
+        
+        .subtitle {
+            font-size: 1.4em;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .author-info {
+            font-size: 1.2em;
+            opacity: 0.8;
+        }
+        
+        .presentation-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ffd93d, #4ecdc4);
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #f39c12;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1em;
+            opacity: 0.9;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+        
+        .slides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .slide-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            display: block;
+        }
+        
+        .slide-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--card-accent);
+        }
+        
+        .slide-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            color: white;
+            background: rgba(255, 255, 255, 0.12);
+        }
+        
+        .slide-card:nth-child(1) {
+            --card-accent: #f39c12;
+            background: rgba(243, 156, 18, 0.15);
+        }
+        
+        .slide-card:nth-child(2) {
+            --card-accent: #f39c12;
+            background: rgba(243, 156, 18, 0.12);
+        }
+        
+        .slide-card:nth-child(3) {
+            --card-accent: #f39c12;
+            background: rgba(243, 156, 18, 0.15);
+        }
+        
+        .slide-card:nth-child(4) {
+            --card-accent: #f39c12;
+            background: rgba(243, 156, 18, 0.12);
+        }
+        
+        .slide-card:nth-child(5) {
+            --card-accent: #f39c12;
+            background: rgba(243, 156, 18, 0.15);
+        }
+        
+        .slide-card:nth-child(6) {
+            --card-accent: #f39c12;
+            background: rgba(243, 156, 18, 0.12);
+        }
+        
+        .slide-card:nth-child(7) {
+            --card-accent: #f39c12;
+            background: rgba(243, 156, 18, 0.15);
+        }
+        
+        .slide-card:nth-child(8) {
+            --card-accent: #f39c12;
+            background: rgba(243, 156, 18, 0.12);
+        }
+        
+        .slide-card:nth-child(9) {
+            --card-accent: #f39c12;
+            background: rgba(243, 156, 18, 0.15);
+        }
+        
+        .slide-number {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--card-accent);
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .slide-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #ffffff;
+            line-height: 1.3;
+        }
+        
+        .slide-desc {
+            font-size: 1em;
+            opacity: 0.85;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .slide-duration {
+            font-size: 0.9em;
+            color: var(--card-accent);
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .navigation-footer {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 50px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .footer-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #f39c12;
+            margin-bottom: 15px;
+        }
+        
+        .footer-text {
+            font-size: 1.1em;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .highlight {
+            color: #f39c12;
+            font-weight: 600;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .slide-card {
+            animation: fadeInUp 0.6s ease-out both;
+        }
+        
+        .slide-card:nth-child(1) { animation-delay: 0.1s; }
+        .slide-card:nth-child(2) { animation-delay: 0.2s; }
+        .slide-card:nth-child(3) { animation-delay: 0.3s; }
+        .slide-card:nth-child(4) { animation-delay: 0.4s; }
+        .slide-card:nth-child(5) { animation-delay: 0.5s; }
+        .slide-card:nth-child(6) { animation-delay: 0.6s; }
+        .slide-card:nth-child(7) { animation-delay: 0.7s; }
+        .slide-card:nth-child(8) { animation-delay: 0.8s; }
+        .slide-card:nth-child(9) { animation-delay: 0.9s; }
+        
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.2em;
+            }
+            
+            .slides-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Home button styling for slides */
+        .home-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(243, 156, 18, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+        }
+        
+        .home-btn:hover {
+            background: rgba(243, 156, 18, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .home-btn::before {
+            content: '🏠 ';
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="main-title">
+                Pipeline Generative AI untuk Otomatisasi Generasi Test Sistem Asinkron
+            </h1>
+            <div class="subtitle">Thesis Defense Presentation</div>
+            <div class="author-info">
+                <strong>Nanda Leo Ardana</strong> | 11210910000083<br>
+                Program Studi Teknik Informatika | UIN Syarif Hidayatullah Jakarta
+            </div>
+        </div>
+        
+        <div class="slides-grid">
+            <a href="slide0_title.html" class="slide-card">
+                <div class="slide-number">0</div>
+                <div class="slide-title">Title & Introduction</div>
+                <div class="slide-desc">Judul penelitian, nama, dan informasi akademis</div>
+            </a>
+            
+            <a href="slide1_hook.html" class="slide-card">
+                <div class="slide-number">1</div>
+                <div class="slide-title">Introduction</div>
+                <div class="slide-desc">Pengenalan sistem asinkron dalam konteks modern</div>
+            </a>
+            
+            <a href="slide2_conflict.html" class="slide-card">
+                <div class="slide-number">2</div>
+                <div class="slide-title">Problem Statement</div>
+                <div class="slide-desc">Tantangan testing sistem asinkron</div>
+            </a>
+            
+            <a href="slide3_quest.html" class="slide-card">
+                <div class="slide-number">3</div>
+                <div class="slide-title">Research Questions</div>
+                <div class="slide-desc">Literature review dan pertanyaan penelitian</div>
+            </a>
+            
+            <a href="slide4_methodology.html" class="slide-card">
+                <div class="slide-number">4</div>
+                <div class="slide-title">Research Methodology</div>
+                <div class="slide-desc">AI-Enhanced Retroactive TDD framework</div>
+            </a>
+            
+            <a href="slide5_climax.html" class="slide-card">
+                <div class="slide-number">5</div>
+                <div class="slide-title">Experimental Results</div>
+                <div class="slide-desc">Coverage transformation & performance metrics</div>
+            </a>
+            
+            <a href="slide6_evidence.html" class="slide-card">
+                <div class="slide-number">6</div>
+                <div class="slide-title">Empirical Validation</div>
+                <div class="slide-desc">Multi-dimensional metrics analysis</div>
+            </a>
+            
+            <a href="slide7_resolution.html" class="slide-card">
+                <div class="slide-number">7</div>
+                <div class="slide-title">Research Contributions</div>
+                <div class="slide-desc">Methodological and technical contributions</div>
+            </a>
+            
+            <a href="slide8_future.html" class="slide-card">
+                <div class="slide-number">8</div>
+                <div class="slide-title">Conclusion & Future Work</div>
+                <div class="slide-desc">Research impact dan arah pengembangan</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

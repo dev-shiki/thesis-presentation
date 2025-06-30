@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tantangan Testing Sistem Asinkron</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Calibri', sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .presentation-slide {
+            width: 100%;
+            max-width: 1200px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px;
+            position: relative;
+        }
+        
+        .slide-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .main-title {
+            font-size: 3.5em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ecf0f1;
+            opacity: 0;
+            animation: fadeInDown 1s ease-out 0.3s forwards;
+        }
+        
+        .problem-statement {
+            font-size: 1.6em;
+            opacity: 0.9;
+            max-width: 800px;
+            line-height: 1.4;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.8s forwards;
+            color: #bdc3c7;
+        }
+        
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 50px 0;
+            opacity: 0;
+            animation: slideInScale 1s ease-out 1.3s forwards;
+        }
+        
+        .challenge-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .challenge-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-color);
+        }
+        
+        .challenge-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .timing-card {
+            --accent-color: #f39c12;
+        }
+        
+        .state-card {
+            --accent-color: #f39c12;
+        }
+        
+        .quality-card {
+            --accent-color: #f39c12;
+        }
+        
+        .challenge-icon {
+            font-size: 3.5em;
+            margin-bottom: 25px;
+            color: var(--accent-color);
+        }
+        
+        .challenge-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+        
+        .challenge-description {
+            font-size: 1.1em;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+        
+        .statistics-section {
+            background: rgba(243, 156, 18, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 50px;
+            border: 1px solid rgba(243, 156, 18, 0.2);
+            text-align: center;
+            max-width: 600px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2s forwards;
+        }
+        
+        .stat-number {
+            font-size: 4.5em;
+            font-weight: 700;
+            color: #f39c12;
+            margin-bottom: 15px;
+        }
+        
+        .stat-description {
+            font-size: 1.3em;
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+        
+        .research-question {
+            margin-top: 50px;
+            text-align: center;
+            max-width: 900px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2.5s forwards;
+        }
+        
+        .question-intro {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        
+        .main-question {
+            font-size: 1.8em;
+            font-weight: 400;
+            color: #f39c12;
+            font-style: italic;
+            line-height: 1.4;
+            padding: 20px;
+            background: rgba(243, 156, 18, 0.1);
+            border-radius: 15px;
+            border-left: 4px solid #f39c12;
+        }
+        
+        .slide-navigation {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            font-size: 0.9em;
+            opacity: 0.6;
+        }
+        
+        .nav-buttons {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .nav-btn.disabled:hover {
+            transform: none;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Home button styling */
+        .home-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(243, 156, 18, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+        }
+        
+        .home-btn:hover {
+            background: rgba(243, 156, 18, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .home-btn::before {
+            content: '🏠 ';
+            margin-right: 5px;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .challenges-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .main-title {
+                font-size: 2.8em;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .presentation-slide {
+                padding: 30px;
+            }
+            
+            .main-title {
+                font-size: 2.2em;
+            }
+            
+            .problem-statement {
+                font-size: 1.3em;
+            }
+            
+            .challenge-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="presentation_index.html" class="home-btn">Home</a>
+    <div class="presentation-slide">
+        <div class="slide-header">
+            <h1 class="main-title">Masalah di Balik Sistem Kompleks</h1>
+            <p class="problem-statement">
+                Pengujian sistem asinkron menghadapi kompleksitas fundamental yang belum teratasi secara optimal
+            </p>
+        </div>
+        
+        <div class="challenges-grid">
+            <div class="challenge-card timing-card">
+                <div class="challenge-icon">⏱️</div>
+                <h3 class="challenge-title">Race Conditions & Timing</h3>
+                <p class="challenge-description">
+                    Seperti air traffic control di bandara - kalau salah koordinasi pesawat, bisa berbahaya. 
+                    Di aplikasi, timing yang salah bisa menyebabkan data korup dan system crash.
+                </p>
+            </div>
+            
+            <div class="challenge-card state-card">
+                <div class="challenge-icon">🔄</div>
+                <h3 class="challenge-title">Concurrent State Management</h3>
+                <p class="challenge-description">
+                    Seperti rumah sakit yang handle ratusan pasien bersamaan - perlu koordinasi 
+                    antara dokter, nurse, lab, farmasi. Di sistem asinkron kompleksitas serupa.
+                </p>
+            </div>
+            
+            <div class="challenge-card quality-card">
+                <div class="challenge-icon">📊</div>
+                <h3 class="challenge-title">Limited Test Coverage</h3>
+                <p class="challenge-description">
+                    Seperti quality control pabrik yang cuma cek 10% produk - sisanya tidak diawasi. 
+                    Testing manual hanya cover sebagian kecil dari sistem yang kompleks.
+                </p>
+            </div>
+        </div>
+        
+        <div class="statistics-section">
+            <div class="stat-number">12.5%</div>
+            <div class="stat-description">
+                dari sistem yang benar-benar ditest dengan baik pada studi kasus kami - 
+                gap yang sangat berbahaya untuk aplikasi production
+            </div>
+        </div>
+        
+        <div class="research-question">
+            <div class="question-intro">Research Opportunity:</div>
+            <div class="main-question">
+                "Bagaimana kalau kita pakai AI untuk solve masalah testing ini secara otomatis dan comprehensive?"
+            </div>
+        </div>
+        
+        <div class="slide-navigation">
+            Slide 3 of 9
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="slide1_hook.html" class="nav-btn">Previous</a>
+            <a href="slide3_quest.html" class="nav-btn">Next</a>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empirical Validation</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Calibri', sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .presentation-slide {
+            width: 100%;
+            max-width: 1200px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
+            position: relative;
+        }
+        
+        .slide-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .main-title {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ecf0f1;
+            opacity: 0;
+            animation: fadeInDown 1s ease-out 0.3s forwards;
+        }
+        
+        .subtitle {
+            font-size: 1.5em;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.8s forwards;
+            color: #bdc3c7;
+        }
+        
+        .metrics-showcase {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            width: 100%;
+            margin: 30px 0;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            opacity: 0;
+            animation: slideInLeft 1s ease-out 1.2s forwards;
+        }
+        
+        .metric-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid #f39c12;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #f39c12;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin: 10px 0;
+            color: #f39c12;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .metric-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        
+        .metric-description {
+            font-size: 1em;
+            opacity: 0.85;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+        
+        .metric-interpretation {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 0.9em;
+            opacity: 0.8;
+            border-left: 3px solid var(--metric-color);
+            line-height: 1.3;
+        }
+        
+        .chart-section {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            height: 400px;
+            opacity: 0;
+            animation: slideInRight 1s ease-out 1.2s forwards;
+        }
+        
+        .chart-title {
+            font-size: 1.6em;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 25px;
+            color: #f39c12;
+        }
+        
+        .validation-summary {
+            background: rgba(243, 156, 18, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 35px;
+            margin-top: 40px;
+            border: 2px solid rgba(243, 156, 18, 0.3);
+            max-width: 1000px;
+            width: 100%;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.8s forwards;
+        }
+        
+        .summary-title {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #f39c12;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+        
+        .summary-point {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .point-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #f39c12;
+            margin-bottom: 10px;
+        }
+        
+        .point-text {
+            font-size: 1em;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+        
+        .slide-navigation {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            font-size: 0.9em;
+            opacity: 0.6;
+        }
+        
+        .nav-buttons {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .nav-btn.disabled:hover {
+            transform: none;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Home button styling */
+        .home-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(243, 156, 18, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+        }
+        
+        .home-btn:hover {
+            background: rgba(243, 156, 18, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .home-btn::before {
+            content: '🏠 ';
+            margin-right: 5px;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .metrics-showcase {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .presentation-slide {
+                padding: 30px;
+            }
+            
+            .main-title {
+                font-size: 2.5em;
+            }
+            
+            .metric-card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="presentation_index.html" class="home-btn">Home</a>
+    <div class="presentation-slide">
+        <div class="slide-header">
+            <h1 class="main-title">Validasi Empiris</h1>
+            <p class="subtitle">Hasil validasi menunjukkan keberhasilan pendekatan AI-Enhanced Retroactive TDD</p>
+        </div>
+        
+        <div class="metrics-showcase">
+            <div class="chart-section">
+                <div class="chart-title">Analisis Kualitas Test Suite</div>
+                <canvas id="qualityChart"></canvas>
+            </div>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">1.87</div>
+                    <div class="metric-title">AETEM</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-value">471.50</div>
+                    <div class="metric-title">ACM</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-value">675%</div>
+                    <div class="metric-title">ROI</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-value">52.99</div>
+                    <div class="metric-title">CIWS</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="validation-summary">
+            <div class="summary-title">Poin Validasi Utama</div>
+            <div class="summary-grid">
+                <div class="summary-point">
+                    <div class="point-title">Efektivitas Coverage</div>
+                    <div class="point-text">
+                        Peningkatan coverage +79.2% membuktikan AI pipeline sangat efektif dalam generate comprehensive tests
+                    </div>
+                </div>
+                <div class="summary-point">
+                    <div class="point-title">Efisiensi Operasional</div>
+                    <div class="point-text">
+                        AETEM score 1.87 menunjukkan optimasi waktu eksekusi yang superior dibanding metode konvensional
+                    </div>
+                </div>
+                <div class="summary-point">
+                    <div class="point-title">Value Ekonomis</div>
+                    <div class="point-text">
+                        ROI 675% memvalidasi kelayakan ekonomis untuk adopsi industri skala besar
+                    </div>
+                </div>
+                <div class="summary-point">
+                    <div class="point-title">Kompleksitas Management</div>
+                    <div class="point-text">
+                        ACM 471.50 menunjukkan kemampuan superior dalam menangani async complexity patterns yang sangat kompleks
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide-navigation">
+            Slide 7 of 9
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="slide5_climax.html" class="nav-btn">Previous</a>
+            <a href="slide7_resolution.html" class="nav-btn">Next</a>
+        </div>
+    </div>
+
+    <script>
+        // Create test quality radar chart (adapted from test_quality_diagram.html)
+        const ctx = document.getElementById('qualityChart').getContext('2d');
+        
+        const qualityData = {
+            labels: [
+                'Test Coverage\n(4.9/5.0)',
+                'Maintainability\n(5.0/5.0)', 
+                'Reliability\n(3.2/5.0)',
+                'Completeness\n(4.3/5.0)',
+                'Readability\n(4.2/5.0)',
+                'Assertion Quality\n(4.8/5.0)'
+            ],
+            datasets: [{
+                label: 'Quality Score',
+                data: [4.9, 5.0, 3.2, 4.3, 4.2, 4.8],
+                backgroundColor: 'rgba(243, 156, 18, 0.3)',
+                borderColor: 'rgba(243, 156, 18, 0.8)',
+                borderWidth: 3,
+                pointBackgroundColor: 'rgba(243, 156, 18, 0.8)',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointRadius: 6,
+                pointHoverRadius: 8
+            }]
+        };
+
+        const config = {
+            type: 'radar',
+            data: qualityData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 5,
+                        min: 0,
+                        ticks: {
+                            stepSize: 1,
+                            font: {
+                                size: 12,
+                                family: 'Segoe UI'
+                            },
+                            color: 'rgba(255, 255, 255, 0.7)'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.2)'
+                        },
+                        angleLines: {
+                            color: 'rgba(255, 255, 255, 0.2)'
+                        },
+                        pointLabels: {
+                            font: {
+                                size: 11,
+                                weight: 'bold',
+                                family: 'Segoe UI'
+                            },
+                            color: 'white'
+                        }
+                    }
+                }
+            }
+        };
+
+        new Chart(ctx, config);
+    </script>
+</body>
+</html> 
