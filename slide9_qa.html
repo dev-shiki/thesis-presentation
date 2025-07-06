@@ -34,19 +34,8 @@
             position: relative;
         }
         
-        .presentation-slide::before {
-            content: '';
-            position: absolute;
-            top: 40px;
-            right: 40px;
-            width: 80px;
-            height: 80px;
-            background-image: url('logo-uin.png');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: contain;
-            opacity: 0.9;
-            z-index: 5;
+        .slide-header {
+            text-align: center;
         }
         
         .thank-you-title {
@@ -136,6 +125,20 @@
             background: rgba(255, 255, 255, 0.1);
         }
         
+        .logo-fixed {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background-image: url('logo-uin.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            opacity: 0.9;
+            z-index: 999;
+        }
+        
         .home-btn {
             position: fixed;
             top: 30px;
@@ -187,10 +190,13 @@
     </style>
 </head>
 <body>
+    <div class="logo-fixed"></div>
     <a href="presentation_index.html" class="home-btn">Home</a>
     <div class="presentation-slide">
-        <h1 class="thank-you-title">Terima Kasih</h1>
-        <p class="qa-subtitle">Sesi Tanya Jawab</p>
+        <div class="slide-header">
+            <h1 class="thank-you-title">Terima Kasih</h1>
+            <p class="qa-subtitle">Sesi Tanya Jawab</p>
+        </div>
 
         <div class="author-info-final">
             <div class="author-name">Nanda Leo Ardana</div>

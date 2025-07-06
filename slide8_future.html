@@ -34,21 +34,6 @@
             position: relative;
         }
         
-        .presentation-slide::before {
-            content: '';
-            position: absolute;
-            top: 40px;
-            right: 40px;
-            width: 80px;
-            height: 80px;
-            background-image: url('logo-uin.png');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: contain;
-            opacity: 0.9;
-            z-index: 5;
-        }
-        
         .slide-header {
             text-align: center;
             margin-bottom: 40px;
@@ -393,9 +378,24 @@
                 font-size: 1.8em;
             }
         }
+
+        .logo-fixed {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background-image: url('logo-uin.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            opacity: 0.9;
+            z-index: 999;
+        }
     </style>
 </head>
 <body>
+    <div class="logo-fixed"></div>
     <a href="presentation_index.html" class="home-btn">Home</a>
     <div class="presentation-slide">
         <div class="slide-header">
