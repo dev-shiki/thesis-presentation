@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Segoe UI', 'Calibri', sans-serif;
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
             color: white;
             min-height: 100vh;
             display: flex;
@@ -40,6 +40,21 @@
             z-index: 1;
         }
         
+        .presentation-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('logo-uin.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 400px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
         .title-container {
             text-align: center;
             max-width: 1000px;
@@ -47,22 +62,22 @@
         }
         
         .main-title {
-            font-size: 3.8em;
-            font-weight: 700;
+            font-size: 3.5em;
+            font-weight: 600;
             margin-bottom: 30px;
             color: #ecf0f1;
             opacity: 0;
-            animation: fadeInDown 1.5s ease-out 0.5s forwards;
+            animation: fadeInDown 1s ease-out 0.3s forwards;
             line-height: 1.2;
         }
         
         .subtitle {
-            font-size: 1.8em;
+            font-size: 1.6em;
             opacity: 0.9;
             margin-bottom: 40px;
             opacity: 0;
-            animation: fadeInUp 1.5s ease-out 1s forwards;
-            font-weight: 300;
+            animation: fadeInUp 1s ease-out 0.6s forwards;
+            font-weight: 400;
             color: #bdc3c7;
         }
         
@@ -212,6 +227,10 @@
             margin-right: 5px;
         }
         
+        .university-logo {
+            display: none; /* No longer needed, but hiding just in case */
+        }
+        
         @keyframes fadeInDown {
             from {
                 opacity: 0;
@@ -226,7 +245,7 @@
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(60px);
+                transform: translateY(40px);
             }
             to {
                 opacity: 1;

@@ -30,8 +30,23 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 60px 20px;
+            padding: 50px 20px;
             position: relative;
+        }
+        
+        .presentation-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('logo-uin.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 400px;
+            opacity: 0.1;
+            z-index: -1;
         }
         
         .slide-header {
@@ -58,6 +73,34 @@
             color: #bdc3c7;
         }
         
+        .context-card {
+            background: rgba(44, 62, 80, 0.4);
+            border-radius: 15px;
+            padding: 30px 40px;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 5px solid #bdc3c7;
+            max-width: 850px;
+            width: 100%;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.3s forwards;
+            text-align: left;
+        }
+        
+        .context-text {
+            font-size: 1.2em;
+            color: #ecf0f1;
+            line-height: 1.6;
+        }
+        
+        .context-source {
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-top: 15px;
+            color: #bdc3c7;
+            text-align: right;
+        }
+        
         .challenges-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -65,7 +108,7 @@
             max-width: 1200px;
             margin: 50px 0;
             opacity: 0;
-            animation: slideInScale 1s ease-out 1.3s forwards;
+            animation: slideInScale 1s ease-out 1.8s forwards;
         }
         
         .challenge-card {
@@ -126,6 +169,41 @@
             opacity: 0.9;
         }
         
+        .evidence-card {
+            background: rgba(231, 76, 60, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 30px 40px;
+            margin-top: 60px;
+            border: 1px solid rgba(231, 76, 60, 0.2);
+            border-left: 5px solid #e74c3c;
+            max-width: 850px;
+            width: 100%;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2.3s forwards;
+            text-align: left;
+        }
+        
+        .evidence-text {
+            font-size: 1.3em;
+            color: #ecf0f1;
+            line-height: 1.6;
+            font-style: italic;
+        }
+        
+        .evidence-text strong {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+        
+        .evidence-source {
+            font-size: 1em;
+            opacity: 0.8;
+            margin-top: 15px;
+            color: #bdc3c7;
+            text-align: right;
+        }
+        
         .statistics-section {
             background: rgba(243, 156, 18, 0.1);
             backdrop-filter: blur(20px);
@@ -144,6 +222,7 @@
             font-weight: 700;
             color: #f39c12;
             margin-bottom: 15px;
+            opacity: 0.9;
         }
         
         .stat-description {
@@ -153,11 +232,11 @@
         }
         
         .research-question {
-            margin-top: 50px;
+            margin-top: 70px;
             text-align: center;
             max-width: 900px;
             opacity: 0;
-            animation: fadeInUp 1s ease-out 2.5s forwards;
+            animation: fadeInUp 1s ease-out 2.8s forwards;
         }
         
         .question-intro {
@@ -322,8 +401,13 @@
         <div class="slide-header">
             <h1 class="main-title">Masalah di Balik Sistem Kompleks</h1>
             <p class="problem-statement">
-                Pengujian sistem asinkron menghadapi kompleksitas fundamental yang belum teratasi secara optimal
+                Secara fundamental, sistem asinkron sulit diuji karena sifatnya yang tidak deterministik. Mengapa 'utang pengujian' ini terus menumpuk di industri?
             </p>
+
+            <div class="context-card">
+                <p class="context-text">Praktik terbaik seperti Test-Driven Development (TDD) sudah ada, namun adopsinya terhambat karena dianggap terlalu lambat dan kompleks untuk sistem yang sudah ada.</p>
+                <p class="context-source">Beck, 2002; Causevic et al., 2011</p>
+            </div>
         </div>
         
         <div class="challenges-grid">
@@ -361,6 +445,11 @@
                 dari sistem yang benar-benar ditest dengan baik pada studi kasus kami - 
                 gap yang sangat berbahaya untuk aplikasi production
             </div>
+        </div>
+        
+        <div class="evidence-card">
+            <p class="evidence-text">Faktanya, kompleksitas asinkron adalah penyebab utama dari <strong>'flaky tests'</strong> — tes yang gagal secara tidak konsisten dan merusak kepercayaan pada proses rilis.</p>
+            <p class="evidence-source">Studi Skala Besar di Microsoft (Lam et al., 2019)</p>
         </div>
         
         <div class="research-question">

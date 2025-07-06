@@ -34,6 +34,21 @@
             position: relative;
         }
         
+        .presentation-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('logo-uin.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 400px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
         .slide-header {
             text-align: center;
             margin-bottom: 60px;
@@ -55,7 +70,39 @@
             color: #f39c12;
             font-weight: 400;
             opacity: 0;
+            animation: fadeInUp 1s ease-out 1.3s forwards;
+        }
+        
+        .stat-card {
+            background: rgba(44, 62, 80, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px 35px;
+            margin: 25px 0 30px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 700px;
+            width: 100%;
+            opacity: 0;
             animation: fadeInUp 1s ease-out 0.8s forwards;
+            text-align: center;
+        }
+
+        .stat-text {
+            font-size: 1.25em;
+            color: #ecf0f1;
+            line-height: 1.6;
+        }
+
+        .stat-text strong {
+            color: #27ae60;
+            font-size: 1.3em;
+        }
+        
+        .stat-source {
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-top: 10px;
+            color: #bdc3c7;
         }
         
         .coverage-transformation {
@@ -296,6 +343,11 @@
         </div>
         </div>
         
+        <div class="stat-card">
+            <p class="stat-text">Revolusi AI sudah di depan mata. <strong>~80% developer</strong> setuju AI adalah masa depan dari <i>software testing</i>.</p>
+            <p class="stat-source">Stack Overflow Developer Survey, 2024</p>
+        </div>
+        
         <div class="coverage-transformation">
             <div class="transformation-title">Transformasi Kemampuan Pengujian</div>
             <div class="coverage-comparison">
@@ -319,13 +371,6 @@
             </div>
         </div>
         
-        <div class="research-focus">
-            <div class="focus-title">Yang Akan Kita Bahas</div>
-            <div class="focus-description">
-                Perjalanan dari masalah sederhana yang kita alami sehari-hari, sampai solusi canggih 
-                menggunakan AI untuk membuat aplikasi lebih aman dan reliable.
-            </div>
-        </div>
         
         <div class="slide-navigation">
             Slide 2 of 10
